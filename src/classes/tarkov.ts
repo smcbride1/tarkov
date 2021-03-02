@@ -56,6 +56,10 @@ export class Tarkov {
     return this.api.gameVersion;
   }
 
+  get backendVersion() {
+    return this.api.backendVersion;
+  }
+
   get session() {
     return this.api.session;
   }
@@ -410,13 +414,13 @@ export class Tarkov {
       version: {
         major: this.gameVersion,
         game: 'live',
-        backend: '6'
+        backend: this.backendVersion
       },
       hwCode: this.hwid,
     });
 
     try {
-      const result: ApiResponse = await this.api.prod.post('launcher/game/start', {
+      const result: ApiResponse = await this.api.launcherProd.post('launcher/game/start', {
         searchParams: {
           launcherVersion: this.launcherVersion,
           branch: 'live',

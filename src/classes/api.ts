@@ -11,6 +11,7 @@ import { singleton } from "tsyringe";
 @singleton()
 export class Api {
   public prod: Got;
+  public launcherProd: Got;
   public launcher: Got;
   public trading: Got;
   public ragfair: Got;
@@ -18,6 +19,7 @@ export class Api {
   public launcherVersion = '10.4.4.123';
   public gameVersion = '0.12.9.10988';
   public unityVersion = '2018.4.28f1';
+  public backendVersion = '6';
 
   private request = 0;
 
@@ -68,6 +70,16 @@ export class Api {
   constructor() {
     this.prod = got.extend({
       prefixUrl: 'https://prod.escapefromtarkov.com',
+      ...this.defaultOptions,
+    });
+
+    this.launcherProd = got.extend({
+      prefixUrl: 'https://prod.escapefromtarkov.com',
+      bsgAgent: true,
+      unityAgent: false,
+      appVersion: false,
+      requestId: false,
+      bsgSession: false,
       ...this.defaultOptions,
     });
 
